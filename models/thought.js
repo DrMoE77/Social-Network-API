@@ -1,7 +1,27 @@
-// Thought text 
-    //string
-    // require
-    // between 1-200 characters
+const thoughtSchema = new Schema({
+    thoughtText: {
+        type: String, 
+        required: true,
+        minlength: 1,
+        maxlength: 200,
+    },
+
+    createdAt: {
+        type: Date, 
+        default: Date.now,
+        
+    },
+    thoughts: [{
+        // Array of `_id` values referencing the `Thought` model
+        
+    }],
+
+    friends: [{
+        // Array of `_id` values referencing the `User(self-reference)` model
+        
+    }]
+})
+
 
     // 
     `createdAt`
