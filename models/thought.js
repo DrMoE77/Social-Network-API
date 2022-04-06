@@ -32,7 +32,7 @@ const reactionSchema = new Schema({
     reactionId: {
     //Default value is set to a new ObjectId
         type:mongoose.Schema.Types.ObjectId(),
-        default:'thought'
+        default:new Types.ObjectId()
     },
 
     reactionBody: {
@@ -58,6 +58,8 @@ const reactionSchema = new Schema({
 thoughtSchema.virtual('reactionCount').get(function(){
     return this.reactions.length
 })
+const thought = mongoose.model('thought', thoughtSchema);
+
 module.exports=thought
   
  
