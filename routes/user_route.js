@@ -1,18 +1,11 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
-
-// The `/api/tags` endpoint
 
 // routing the GET request
 router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
-  Tag.findAll({
-    include: [
-      {
-        model: Product, attributes: ['id', 'product_name', 'price', 'stock', 'category_id'] // everything included
-    }
-    ]
+  // Get all users
+  user.getAll({
+// Get all user data from DB
+    
   })
     .then(dbTagData => res.json(dbTagData))
     // incase of error
@@ -25,18 +18,13 @@ router.get('/', (req, res) => {
 
 // routing the GET request by id --> also check if the id exists
 router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+  // find a single user by its `id`
+  
   Tag.findOne({
     where: {
       id: req.params.id
     },
-    include: [
-      {
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
-      }
-    ]
+    
   })
     .then(dbTagData => {
       // if tag doesn't exist
@@ -55,7 +43,7 @@ router.get('/:id', (req, res) => {
 
 // routing the POST request
 router.post('/', (req, res) => {
-  // create a new tag
+  // create a new user
   Tag.create({
     tag_name: req.body.tag_name
   })
