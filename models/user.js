@@ -1,3 +1,7 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+
+
 const userSchema = new Schema({
     username: {
         type: String, 
@@ -14,7 +18,8 @@ const userSchema = new Schema({
     },
     thoughts: [{
         // Array of `_id` values referencing the `Thought` model
-        
+        type:Schema.Types.ObjectId()
+
     }],
 
     friends: [{

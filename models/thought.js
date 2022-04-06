@@ -1,3 +1,6 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+const moment=require("moment")
 const thoughtSchema = new Schema({
     thoughtText: {
         type: String, 
@@ -9,32 +12,54 @@ const thoughtSchema = new Schema({
     createdAt: {
         type: Date, 
         default: Date.now,
-        
+        get: (createdAttime) => moment(createdAttime).format('DD MM YYYY, hh:mm a')
     },
-    thoughts: [{
-        // Array of `_id` values referencing the `Thought` model
-        
-    }],
 
-    friends: [{
-        // Array of `_id` values referencing the `User(self-reference)` model
-        
-    }]
+    username: {
+        type: String, 
+        required: true,
+    },
+
+    reactions: {
+        type: String, 
+        required: true,
+    },
+    
 })
 
+const reactionSchema = new Schema({
+    reactionId: {
+    //Use Mongoose's ObjectId data type
+    //Default value is set to a new ObjectId
 
-    // 
-    `createdAt`
+    },
+
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280, 
+        
+    },
+
+    username: {
+        type: String, 
+        required: true,
+    },
+
+    createdAt: {
+        type: Date, 
+        default: Date.now,
+        get: (createdAttime) => moment(createdAttime).format('DD MM YYYY, hh:mm a')
+    },
     
-    // Date
-     
-   // Set default value to the current timestamp
-    // Use a getter method to format the timestamp on query
+})
+
+thoughtSchema.virtual('reactionCount').get(function(){
+    return this.reactions.length
+})
+module.exports=thought
   
-  //`username` (The user that created this thought)
-  // String
-  // Required
+ 
   
-  //`reactions` (These are like replies)
-    // Array of nested documents created with the `reactionSchema`
+  
   
