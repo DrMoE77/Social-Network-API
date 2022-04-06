@@ -18,13 +18,15 @@ const userSchema = new Schema({
     },
     thoughts: [{
         // Array of `_id` values referencing the `Thought` model
-        type:Schema.Types.ObjectId()
+        type:mongoose.Schema.Types.ObjectId(),
+        ref:'thought'
 
     }],
 
     friends: [{
         // Array of `_id` values referencing the `User(self-reference)` model
-        
+        type:mongoose.Schema.Types.ObjectId(),
+        ref:'user'
     }]
 })
 

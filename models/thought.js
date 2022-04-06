@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const moment=require("moment")
+
 const thoughtSchema = new Schema({
     thoughtText: {
         type: String, 
@@ -29,9 +30,9 @@ const thoughtSchema = new Schema({
 
 const reactionSchema = new Schema({
     reactionId: {
-    //Use Mongoose's ObjectId data type
     //Default value is set to a new ObjectId
-
+        type:mongoose.Schema.Types.ObjectId(),
+        default:'thought'
     },
 
     reactionBody: {
