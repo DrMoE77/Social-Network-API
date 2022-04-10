@@ -107,7 +107,7 @@ router.post('/:id', (req, res) => {
       where: {
           id: req.params.id
       },
-   $push:{friends:friendId}
+   $push:{friends:params.friendId}
   })
     .then(dbUsers => res.json(dbUsers))
     .catch(err => {
@@ -123,9 +123,17 @@ router.delete('/:id', (req, res) => {
       where: {
           id: req.params.id
       },
-   $push:{friends:friendId}
+   $pull:{friends:params.friendId}
   })
-    .then(dbUsers => res.json(dbUsers))
+  .populate({path:"friends"})
+  .then(dbUsers => {
+    // if tag doesn't exist
+    if (!dbUsers) {
+      res.status(404).json({ message: 'Sorry, a user with this id was not found!'});
+      return;
+    }
+    res.json(dbUsers);
+  })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
