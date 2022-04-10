@@ -1,8 +1,10 @@
 const router = require('express').Router();
+const user = require("../models")
 
 // routing the GET request
 router.get('/', (req, res) => {
   // Get all users
+  user.find({})
   user.getAll({
 // Get all user data from DB
     
