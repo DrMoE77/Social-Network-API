@@ -66,7 +66,7 @@ router.put('/:id', (req, res) => {
             res.status(404).json({ message: 'Sorry, thought with this id was not found!'});
             return;
         }
-        res.json(dbUsers);
+        res.json(dbThoughts);
   })
     .catch(err => {
         console.log(err); 
@@ -75,7 +75,7 @@ router.put('/:id', (req, res) => {
 
 });
 
-// deleting a user
+// deleting a thought
 // routing the DELETE request by id --> also check if the id exists
 router.delete('/:id', (req, res) => {
   // delete on user by its `id` value
@@ -84,13 +84,13 @@ router.delete('/:id', (req, res) => {
         id: req.params.id
     }
   })
-    .then(dbUsers => {
+    .then(dbThoughts => {
       // if user doesn't exist
-        if (!dbUsers) {
-            res.status(404).json({ message: 'Sorry, a user with this id was not found!'});
+        if (!dbThoughts) {
+            res.status(404).json({ message: 'Sorry, a thought not found!'});
             return;
         }
-        res.json(dbUsers);
+        res.json(dbThoughts);
   })
   // incase of error
     .catch(err => {
@@ -99,16 +99,16 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-// adding a friend to a user's list
+// adding a reaction to a thought
 router.post('/:id', (req, res) => {
-  user.findOneAndUpdate
+  thought.findOneAndUpdate
     (req.body, {
       where: {
           id: req.params.id
       },
-   $push:{friends:params.friendId}
+   $push:{reactions:{reactionBody:body.reactionBody,username: body.username}}
   })
-    .then(dbUsers => res.json(dbUsers))
+    .then(dbThoughts => res.json(dbThoughts))
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
