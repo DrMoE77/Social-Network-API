@@ -1,15 +1,12 @@
 const router = require('express').Router();
-const user = require("../models")
+const {user,thought} = require("../models")
 
 // routing the GET request
 router.get('/', (req, res) => {
   // Get all users
-  user.find({})
-  user.getAll({
-// Get all user data from DB
-    
-  })
-    .then(dbTagData => res.json(dbTagData))
+  user.find({}).populate({path:"thoughts"}).populate({path:"friends"})
+ 
+    .then(dbUsers => res.json(dbUsers))
     // incase of error
     .catch(err => {
       console.log(err);
