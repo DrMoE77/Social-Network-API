@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single user by its `id`
   
-  Tag.findOne({
+  user.findOne({
     where: {
       id: req.params.id
     }
@@ -102,8 +102,12 @@ router.delete('/:id', (req, res) => {
 
 // adding a friend to a user's list
 router.post('/:id', (req, res) => {
-  user.findOneAndUpdate({
-    username: req.body.username, email: req.body.email
+  user.findOneAndUpdate
+    (req.body, {
+      where: {
+          id: req.params.id
+      },
+   $push:{friends:friendId}
   })
     .then(dbUsers => res.json(dbUsers))
     .catch(err => {
@@ -112,5 +116,19 @@ router.post('/:id', (req, res) => {
   });
 });
 
-
+// deleting a friend from a user's list
+router.delete('/:id', (req, res) => {
+  user.findOneAndUpdate
+    (req.body, {
+      where: {
+          id: req.params.id
+      },
+   $push:{friends:friendId}
+  })
+    .then(dbUsers => res.json(dbUsers))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+  });
+});
 module.exports = router;
