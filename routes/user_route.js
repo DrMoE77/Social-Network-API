@@ -55,19 +55,19 @@ router.post('/', (req, res) => {
 //updating user info
 // routing the UPDATE request by id --> also check if the id exists
 router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
-  Tag.update(req.body, {
+  // update a user's name by its `id` value
+  user.findOneAndUpdate(req.body, {
     where: {
         id: req.params.id
     }
   })
-    .then(dbTagData => {
+    .then(dbUsers => {
       // if tag doesn't exist
-        if (!dbTagData[0]) {
-            res.status(404).json({ message: 'Sorry, a tag with this id was not found!'});
+        if (!dbUsers[0]) {
+            res.status(404).json({ message: 'Sorry, user with this id was not found!'});
             return;
         }
-        res.json(dbTagData);
+        res.json(dbUsers);
   })
     .catch(err => {
         console.log(err); 
@@ -76,22 +76,22 @@ router.put('/:id', (req, res) => {
 
 });
 
-
+// deleting a user
 // routing the DELETE request by id --> also check if the id exists
 router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
-  Tag.destroy({
+  // delete on user by its `id` value
+  user.findOneAndDelete({
     where: {
         id: req.params.id
     }
   })
-    .then(dbTagData => {
-      // if tag doesn't exist
-        if (!dbTagData) {
-            res.status(404).json({ message: 'Sorry, a tag with this id was not found!'});
+    .then(dbUsers => {
+      // if user doesn't exist
+        if (!dbUsers) {
+            res.status(404).json({ message: 'Sorry, a user with this id was not found!'});
             return;
         }
-        res.json(dbTagData);
+        res.json(dbUsers);
   })
   // incase of error
     .catch(err => {
