@@ -102,7 +102,7 @@ router.delete('/:id', (req, res) => {
 
 // adding a friend to a user's list
 router.post('/:id', (req, res) => {
-  user.create({
+  user.findOneAndUpdate({
     username: req.body.username, email: req.body.email
   })
     .then(dbUsers => res.json(dbUsers))
