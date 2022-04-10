@@ -115,16 +115,15 @@ router.post('/:id', (req, res) => {
   });
 });
 
-// deleting a friend from a user's list
+// deleting a reaction from a thought
 router.delete('/:id', (req, res) => {
-  user.findOneAndUpdate
+  thought.findOneAndUpdate
     (req.body, {
       where: {
           id: req.params.id
       },
-   $pull:{friends:params.friendId}
+   $pull:{reactions:{id:req.params.reactionId}}
   })
-  .populate({path:"friends"})
   .then(dbUsers => {
     // if tag doesn't exist
     if (!dbUsers) {
