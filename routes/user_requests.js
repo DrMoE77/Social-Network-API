@@ -112,7 +112,6 @@ deleteFriend({params}, res) {
   user.findOneAndUpdate({ _id: params.userId },
    {$pull:{friends:params.friendId}
   })
-  .populate({path:"friends"})
   .then(dbUsers => {
     // if tag doesn't exist
     if (!dbUsers) {
@@ -128,4 +127,4 @@ deleteFriend({params}, res) {
 },
 }
 
-module.exports = router;
+module.exports = userRoutes;
