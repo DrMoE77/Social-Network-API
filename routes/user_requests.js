@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const {user,thought} = require("../models")
 
+const userRoutes ={
 // Get all users
 // routing the GET request
-router.get((req, res) => {
+getUsers(req, res) {
   user.find({})
   .populate({path:"friends", select:"-__v"})
   .populate({path:"thoughts", select:"-__v"})
@@ -14,12 +15,12 @@ router.get((req, res) => {
       console.log(err);
       res.status(500).json(err);
   });
-});
+},
 
 
  // find a single user by its `id`
 // routing the GET request by id --> also check if the id exists
-router.get('/:id', (req, res) => {  
+getUserById({params},res) {  
   user.findOne({ _id: params.id })
   .populate({path:"friends", select: '-__v'})
   .populate({path:"thoughts",select: '-__v',populate:{path:"reactions"}})
@@ -36,12 +37,12 @@ router.get('/:id', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
-});
+},
 
 
 // adding a new user
 // routing the POST request
-router.post('/', (req, res) => {
+addUser( {body},res) {
   // create a new user
   user.create({
     username: req.body.username, email: req.body.email
@@ -51,12 +52,12 @@ router.post('/', (req, res) => {
       console.log(err);
       res.status(500).json(err);
   });
-});
+},
 
 
 //updating user info
 // routing the UPDATE request by id --> also check if the id exists
-router.put('/:id', (req, res) => {
+updateUser({params, body},res) {
   // update a user's name by its `id` value
   user.findOneAndUpdate(req.body, { _id: params.id })
     .then(dbUsers => {
@@ -72,17 +73,13 @@ router.put('/:id', (req, res) => {
         res.status(500).json(err);
   });
 
-});
+},
 
 // deleting a user
 // routing the DELETE request by id --> also check if the id exists
-router.delete('/:id', (req, res) => {
+deleteUser({params}, res) {
   // delete on user by its `id` value
-  user.findOneAndDelete({
-    where: {
-        id: req.params.id
-    }
-  })
+  user.findOneAndDelete({_id: params.id })
     .then(dbUsers => {
       // if user doesn't exist
         if (!dbUsers) {
@@ -96,32 +93,24 @@ router.delete('/:id', (req, res) => {
         console.log(err);
         res.status(500).json(err);
   });
-});
+},
 
 // adding a friend to a user's list
-router.post('/:id', (req, res) => {
-  user.findOneAndUpdate
-    (req.body, {
-      where: {
-          id: req.params.id
-      },
-   $push:{friends:params.friendId}
+addFriend({params},res) {
+  user.findOneAndUpdate({ _id: params.userId },
+   {$push:{friends:params.friendId}
   })
     .then(dbUsers => res.json(dbUsers))
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
   });
-});
+},
 
 // deleting a friend from a user's list
-router.delete('/:id', (req, res) => {
-  user.findOneAndUpdate
-    (req.body, {
-      where: {
-          id: req.params.id
-      },
-   $pull:{friends:params.friendId}
+deleteFriend({params}, res) {
+  user.findOneAndUpdate({ _id: params.userId },
+   {$pull:{friends:params.friendId}
   })
   .populate({path:"friends"})
   .then(dbUsers => {
@@ -136,5 +125,7 @@ router.delete('/:id', (req, res) => {
         console.log(err);
         res.status(500).json(err);
   });
-});
+},
+}
+
 module.exports = router;
