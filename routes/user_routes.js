@@ -6,7 +6,7 @@ const {getUsers,getUserById,addUser, updateUser, deleteUser, addFriend, deleteFr
 router.route("/").get(getUsers).post(addUser)
 
 // routing requests with id
-router.route("/:id").get(getUserById).put(updateUser)
+router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser)
 
 // routing requests with user id
 router.route("/:userId/friends/:friendId").post(addFriend).delete(deleteFriend)
