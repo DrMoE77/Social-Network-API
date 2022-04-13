@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
-const moment=require("moment")
+const { Schema, model, Types } = require("mongoose")
+const {formateddate} = require("../utils/time")
 
 const thoughtSchema = new Schema({
     thoughtText: {
