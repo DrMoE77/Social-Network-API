@@ -1,23 +1,27 @@
-const express = require("express")
-
-
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express()
+const router = express.Router();
+const port = 3000;
+
 app.use(express.json())
 
 //setting up the mongodb
-const mongoose = require("mongoose")
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Social-Network-Api',{
-    useNewUrlParser: true
+
+var uri = "mongodb://127.0.0.1:27017/Social-Network-Api";
+mongoose.connect(uri,{
+  useUnifiedTopology: true, 
+  useNewUrlParser: true
 })
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
+const connection = mongoose.connection;
+connection.on("error", console.error.bind(console, "connection error: "));
+connection.once("open", function () {
   console.log("Connected successfully");
 });
 
+app.use("/", router);
 
-
-app.listen(3000, () => {
-  console.log("Server is running at port 3000");
+app.listen(port, function() {
+  console.log("Server is running on Port: " + port);
 });
