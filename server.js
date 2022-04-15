@@ -1,27 +1,33 @@
-const mongoose = require("mongoose");
-const express = require("express");
+// EXPRESS 
+const express = require('express')
 const app = express()
-const router = express.Router();
-const port = 3001;
-
+const PORT = 3000
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-//setting up the mongodb
+// MONGOOSE 
+const mongoose = require('mongoose')
 
-var uri = "mongodb://127.0.0.1:27017/Social-Network-Api";
-mongoose.connect(uri,{
-  useUnifiedTopology: true, 
-  useNewUrlParser: true
+mongoose.connect('mongodb://127.0.0.1:27017/Social-Network-Api', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
 
-const connection = mongoose.connection;
-connection.on("error", console.error.bind(console, "connection error: "));
-connection.once("open", function () {
-  console.log("Connected successfully");
-});
+mongoose.connection.on('connected', () =>
+console.log('Connected to MongoDB Endpoint')
+);
 
-app.use("/", router);
+mongoose.connection.on('error', (err) =>
+console.log(`MONGOOSE DISCONNECTED ERROR: ${err}`)
+);
 
-app.listen(port, function() {
-  console.log("Server is running on Port: " + port);
-});
+mongoose.set('debug', true)
+
+// FILES
+app.use(require('./routes'));
+
+
+// Server Listen 
+app.listen(PORT, () => {
+console.log((`Connected on localhost:${PORT}`))
+})
