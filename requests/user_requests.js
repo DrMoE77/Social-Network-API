@@ -110,7 +110,7 @@ const userRoutes = {
         })
         .catch(err => res.json(err));
     }
-    }
+}
 
 
 module.exports = userRoutes

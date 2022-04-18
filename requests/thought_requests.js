@@ -35,9 +35,9 @@ const thoughtRoutes = {
     // adding a thought
     addThought({ body }, res) {
         thought.create({ thoughtText: body.thoughtText, username: body.username })
-        .then(({_id}) => user.findOneAndUpdate({ _id: body.userId}, { $push: { thoughts: _id } }, { new: true }))
+        .then(({ _id }) => {return user.findOneAndUpdate({ _id: params.userId },{ $push: { thoughts: _id }},{ new: true, runValidators: true });})
         .then(dbThoughts => res.json(dbThoughts))
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(400).json(err))
     },
 
     // updating thought info 
@@ -97,7 +97,7 @@ const thoughtRoutes = {
                 res.status(404).json({ message: ' Thought with this ID not found ' });
                 return;
             }
-            res.json({message: 'Thought deleted! '});
+            res.json({message: 'Reaction deleted!'});
         })
         .catch(err => res.status(500).json(err));
     }
