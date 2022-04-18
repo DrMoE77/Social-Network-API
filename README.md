@@ -15,8 +15,11 @@
   ## Usage
   If you want to have a social network that can handle large amounts of unstructured data. 
   These are the walk throught videos demonstrating API routes:
+  
   User Walk through video: https://www.loom.com/share/eed2174635664f1198c6a03212059184
+  
   Thoughts + Reactions Walk through video: https://www.loom.com/share/9685a5fff31c411d86ca01f62a023e9d
+  
   Friends walk through video: https://www.loom.com/share/d5a6267f6dec4a3e8525cea10f3f0bf3
 
 
